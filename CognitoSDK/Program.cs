@@ -1,7 +1,22 @@
+using CognitoSDK.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<ICognitoService, CognitoService>();
+builder.Services.AddCognitoIdentity(config =>
+{
+    config.Password = new Microsoft.AspNetCore.Identity.PasswordOptions
+    {
+        RequireDigit = false,
+        RequiredLength = 6,
+        RequiredUniqueChars = 0,
+        RequireLowercase = false,
+        RequireNonAlphanumeric = false,
+        RequireUppercase = false,
+    };
+});
 
 var app = builder.Build();
 
